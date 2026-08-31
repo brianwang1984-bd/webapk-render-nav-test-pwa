@@ -11,30 +11,28 @@ https://issues.chromium.org/issues/new?component=1456221
 
 ## Title
 
-Renderer-initiated navigations do not launch WebAPKs at App Links state 1024
+In-Chrome link clicks open as a regular tab instead of the installed WebAPK
 
 ## Description (paste below)
 
 ### Summary
 
-- On Android S+, a renderer-initiated in-Chrome navigation (link click / `window.open`) to an in-scope HTTPS URL does not launch the installed WebAPK after GMS sets App Links state to `1024`.
-- The same URL still launches the WebAPK for an incoming `ACTION_VIEW` / `BROWSABLE` intent via the sole-handler trampoline (`params.isFromIntent()`), added for https://crbug.com/40191153 (commit aff7fc1).
-- Renderer navigations instead query with `MATCH_DEFAULT_ONLY`; AOSP hides a `1024` WebAPK, so Chrome stays in the tab.
-- Chrome's `WebappRegistry` still has the install-time scope → package mapping, independent of GMS DAL state.
-- The `1024` write is a GMS re-verification defect (no WebAPK trusted-cert phase); this bug is the remaining Chrome gap of 40191153.
+- On Android S+, WebAPK URL handlers are not verified, so they cannot be default handlers for web intents; in-scope URLs then open as a regular Chrome tab instead of the installed WebAPK, even though Chrome knows it is installed (the app menu shows "Open …" rather than "Add to Home screen" / "Install").
+- https://crbug.com/40191153 CL https://crrev.com/c/3110307 (M94) trampolines an incoming Intent to the WebAPK when Chrome is the one that received it.
+- https://crbug.com/40191153 CL https://crrev.com/c/3696749 restored that incoming-intent path after an M97 regression by also considering non-default (unverified) WebAPK handlers.
+- Renderer-initiated navigations (a link click or `window.open` inside a Chrome tab) still stay in the tab; that path was never covered.
 
 ### Steps to reproduce
 
 1. Android S+, Chrome as the default browser. Repro PWA: https://brianwang1984-bytedance.github.io/webapk-render-nav-test-pwa/ (in-scope start URL: `…/app/`; debug WebAPK + adb helpers: https://github.com/brianwang1984-bytedance/webapk-render-nav-test-apk).
-2. Open `…/app/` in Chrome and install the PWA. Confirm `adb shell pm list packages | grep webapk`.
-3. From a Chrome tab, open the landing page and tap **Open in-scope PWA URL**. At state 1 the WebAPK launches (`display-mode: standalone`).
-4. Force App Links state `1024` for that WebAPK + host `brianwang1984-bytedance.github.io` (helper in the APK repo; `pm set-app-links … 0` is equivalent for resolution). Keep "Open supported links" enabled.
-5. Close the WebAPK. In a Chrome tab (not the installed app), open the landing page again and tap **Open in-scope PWA URL**.
+2. Open `…/app/` in Chrome and install the PWA. The Chrome menu should show "Open …" rather than "Install".
+3. If the WebAPK is still a verified default handler, clear App Links verification for that package (helpers in the APK repo) so Android no longer treats it as a default handler.
+4. Close the WebAPK. In a Chrome tab (not the installed app), open the landing page and tap **Open in-scope PWA URL**.
 
 ### Expected
 
-The installed WebAPK launches, same as at state 1 and same as an incoming VIEW intent to the start URL.
+The URL is passed to the installed WebAPK (standalone), same as an incoming `ACTION_VIEW` / `BROWSABLE` intent.
 
 ### Actual
 
-Chrome stays on the in-scope URL in the tab (`display-mode: browser`). An incoming VIEW intent to the same URL still launches the WebAPK if it is the sole specialized handler.
+The URL opens as a regular browser tab. Chrome's menu still shows "Open …" rather than "Install". An incoming VIEW intent to the same URL still launches the WebAPK.
