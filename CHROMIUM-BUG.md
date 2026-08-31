@@ -11,7 +11,7 @@ https://issues.chromium.org/issues/new?component=1456221
 
 ## Title
 
-In-Chrome link clicks open as a regular tab instead of the installed WebAPK
+Chrome doesn't open WebAPKs for renderer-initiated navigations (Android S)
 
 ## Description (paste below)
 
