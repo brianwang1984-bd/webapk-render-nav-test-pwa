@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebAPK Render-Nav Test</title>
+    <link rel="manifest" href="./manifest.webmanifest" type="application/manifest+json" />
+    <meta name="theme-color" content="#1e1b4b" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #1e1b4b;
+        color: #e0e7ff;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 24px;
+      }
+      main { max-width: 560px; }
+      h1 { margin: 0 0 8px; font-size: 28px; }
+      .badge {
+        font-size: 12px;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        opacity: .75;
+        margin-bottom: 12px;
+      }
+      p { line-height: 1.5; }
+      code {
+        background: rgba(0,0,0,.28);
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-size: 13px;
+      }
+      #mode[data-kind="app"] { color: #86efac; font-weight: 700; }
+      #mode[data-kind="tab"] { color: #fcd34d; font-weight: 700; }
+      button, a.btn {
+        display: inline-block;
+        margin: 10px 6px 0;
+        padding: 12px 18px;
+        border: 0;
+        border-radius: 10px;
+        background: #e0e7ff;
+        color: #1e1b4b;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      #install[hidden] { display: none; }
+      .path { margin-top: 24px; font-size: 13px; opacity: .8; word-break: break-all; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="badge">In-scope PWA · /webapk-render-nav-test-pwa/app/</p>
+      <h1>WebAPK Render-Nav Test</h1>
+      <p>
+        Display mode: <span id="mode">…</span>
+      </p>
+      <p>
+        This page is the WebAPK start URL / scope.
+        Install it from Chrome, then return to the
+        <a class="btn" href="../">out-of-scope landing page</a>
+        and tap the in-scope link from a Chrome tab.
+      </p>
+      <button id="install" hidden>Install this PWA</button>
+      <p class="path">Current URL: <code id="loc"></code></p>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
