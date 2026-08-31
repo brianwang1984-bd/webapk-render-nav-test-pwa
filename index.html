@@ -89,7 +89,12 @@
           <a href="./app/">the PWA</a> in Chrome and install it as a WebAPK
           from the Chrome menu (Install / Add to Home screen).</li>
         <li>After the WebAPK is installed, sometimes the domain verification
-          status becomes non-verified.</li>
+          status becomes non-verified. Check with
+          <code>adb shell pm list packages | grep webapk</code>
+          then
+          <code>adb shell pm get-app-links --user 0 &lt;pkg&gt;</code>
+          — under Domain verification state, continue when the host is not
+          <code>verified</code>.</li>
         <li>Come back to this out-of-scope test start page in a
           <strong>Chrome tab</strong> (not the installed app) and tap the button.</li>
       </ol>

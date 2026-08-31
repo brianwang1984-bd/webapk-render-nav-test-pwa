@@ -13,7 +13,10 @@ in **Play Chrome** and install it from Chrome's menu. Chrome mints the WebAPK.
 Then open the out-of-scope test start page
 (https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/)
 in a Chrome tab and tap the link. After the WebAPK is installed, sometimes
-the domain verification status becomes non-verified.
+the domain verification status becomes non-verified. Check with
+`adb shell pm list packages | grep webapk` then
+`adb shell pm get-app-links --user 0 <pkg>` (continue when the host is not
+`verified`).
 
 Copy-paste Chromium bug text: [CHROMIUM-BUG.md](./CHROMIUM-BUG.md)
 

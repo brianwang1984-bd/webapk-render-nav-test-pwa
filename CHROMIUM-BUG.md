@@ -26,7 +26,10 @@ In-Chrome link clicks open as a regular tab instead of the installed WebAPK
 
 1. Android S+, Chrome as the default browser.
 2. Open the PWA in Chrome: https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/app/ and install it as a WebAPK from the Chrome menu (**Install** / **Add to Home screen**). After install, the Chrome menu should show "Open …" rather than "Install".
-3. After the WebAPK is installed, sometimes the domain verification status becomes non-verified.
+3. After the WebAPK is installed, sometimes the domain verification status becomes non-verified. Check with:
+   `adb shell pm list packages | grep webapk`
+   then `adb shell pm get-app-links --user 0 <pkg>`
+   Under `Domain verification state`, the host is `verified` or not. Continue when it is not `verified`.
 4. Close the WebAPK. In a Chrome tab (not the installed app), open the out-of-scope test start page https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/ and tap **Open in-scope PWA URL**. That page is outside the PWA scope; the tap is a renderer-initiated navigation into the installed PWA.
 
 ### Expected
