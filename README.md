@@ -7,8 +7,9 @@ verification is state `1024`.**
 Live site (GitHub Pages):
 https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/
 
-Matching debug WebAPK + setup scripts:
-https://github.com/brianwang1984-bd/webapk-render-nav-test-apk
+Testers: open the site in **Play Chrome**, install the PWA from Chrome's menu,
+then use the landing-page link. Chrome mints the WebAPK; no sideloaded APK is
+required.
 
 Copy-paste Chromium bug text: [CHROMIUM-BUG.md](./CHROMIUM-BUG.md)
 
