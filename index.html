@@ -63,18 +63,13 @@
   </head>
   <body>
     <main>
-      <p class="badge">Out of PWA scope · renderer-navigation tap target</p>
+      <p class="badge">Out of PWA scope · test start page</p>
       <h1>WebAPK renderer-navigation repro</h1>
       <p>
-        This page is <strong>not</strong> in the installed PWA scope.
-        The in-scope start URL is
-        <code>/webapk-render-nav-test-pwa/app/</code>.
-        Tapping the button is a same-host, renderer-initiated navigation
-        that introduces a new specialized handler (the WebAPK).
-      </p>
-      <p>
-        <strong>At App Links state 1:</strong> Chrome should launch the WebAPK.<br />
-        <strong>At state 1024 (bug):</strong> Chrome stays in this tab.
+        This is the <strong>out-of-scope test start page</strong>.
+        The PWA to install is
+        <a href="./app/"><code>/webapk-render-nav-test-pwa/app/</code></a>.
+        Tapping the button is a renderer-initiated navigation into that PWA.
       </p>
       <a class="btn" id="go" href="./app/">
         Open in-scope PWA URL
@@ -91,13 +86,12 @@
       <h2>Setup</h2>
       <ol>
         <li>On Android S+, open
-          <a href="./app/">the PWA</a> in Chrome and install it
-          (Add to Home screen / Install app).</li>
-        <li>Confirm the WebAPK exists:
-          <code>adb shell pm list packages | grep webapk</code></li>
-        <li>Force domain verification to 1024. Helper and APK fixture:
-          <a href="https://github.com/brianwang1984-bd/webapk-render-nav-test-apk">webapk-render-nav-test-apk</a></li>
-        <li>Come back to this page in a <strong>Chrome tab</strong> (not the installed app) and tap the button.</li>
+          <a href="./app/">the PWA</a> in Chrome and install it as a WebAPK
+          from the Chrome menu (Install / Add to Home screen).</li>
+        <li>After the WebAPK is installed, sometimes the domain verification
+          status becomes non-verified.</li>
+        <li>Come back to this out-of-scope test start page in a
+          <strong>Chrome tab</strong> (not the installed app) and tap the button.</li>
       </ol>
       <p class="mono" id="here"></p>
     </main>

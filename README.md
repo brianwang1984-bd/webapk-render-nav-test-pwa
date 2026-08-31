@@ -7,9 +7,13 @@ verification is state `1024`.**
 Live site (GitHub Pages):
 https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/
 
-Testers: open the site in **Play Chrome**, install the PWA from Chrome's menu,
-then use the landing-page link. Chrome mints the WebAPK; no sideloaded APK is
-required.
+Testers: open the PWA
+(https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/app/)
+in **Play Chrome** and install it from Chrome's menu. Chrome mints the WebAPK.
+Then open the out-of-scope test start page
+(https://brianwang1984-bd.github.io/webapk-render-nav-test-pwa/)
+in a Chrome tab and tap the link. After the WebAPK is installed, sometimes
+the domain verification status becomes non-verified.
 
 Copy-paste Chromium bug text: [CHROMIUM-BUG.md](./CHROMIUM-BUG.md)
 
