@@ -72,8 +72,28 @@
         Tapping the button is a renderer-initiated navigation into that PWA.
       </p>
       <a class="btn" id="go" href="./app/">
-        Open in-scope PWA URL
+        Open in-scope PWA URL (same tab / target=_self)
       </a>
+
+      <h2>target=_blank variants (desktop windowing / hasOpener probe)</h2>
+      <p>
+        These open the same in-scope PWA URL in a new tab. In desktop windowing
+        mode a <code>target=_blank</code> foreground tab can hit
+        <code>isDesktopBrowserAuxiliaryNavigation</code>, which is gated on
+        <code>webContents.hasOpener()</code>. Plain <code>_blank</code> is
+        noopener-by-default (opener severed); <code>rel="opener"</code> forces
+        <code>hasOpener()==true</code>.
+      </p>
+      <a class="btn" id="blank-default" href="./app/" target="_blank">
+        _blank (bare — noopener by default)
+      </a>
+      <a class="btn" id="blank-opener" href="./app/" target="_blank" rel="opener">
+        _blank rel=opener (forces hasOpener=true)
+      </a>
+      <a class="btn" id="blank-noopener" href="./app/" target="_blank" rel="noopener">
+        _blank rel=noopener (explicit — Dan's suggestion)
+      </a>
+
       <div class="note">
         <p><strong>How to tell what happened</strong></p>
         <p>
