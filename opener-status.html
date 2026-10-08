@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Opener status · WebAPK renderer-nav test</title>
+    <meta name="theme-color" content="#0f172a" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        line-height: 1.5;
+      }
+      /* Prominent fixed banner at the top; color-coded by hasOpener. */
+      #opener-banner {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 9999;
+        padding: 18px 16px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 30px;
+        letter-spacing: .02em;
+        box-shadow: 0 2px 14px rgba(0,0,0,.5);
+      }
+      #opener-banner.ok  { background: #166534; color: #dcfce7; }  /* hasOpener=false => green */
+      #opener-banner.bad { background: #991b1b; color: #fee2e2; }  /* hasOpener=true  => red   */
+      #opener-banner .sub { display: block; font-size: 14px; font-weight: 600; opacity: .9; margin-top: 6px; }
+      main { max-width: 720px; margin: 0 auto; padding: 150px 20px 64px; }
+      h1 { font-size: 22px; margin: 0 0 12px; }
+      table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+      th, td {
+        text-align: left; padding: 10px 12px; border: 1px solid #334155;
+        font-size: 15px; word-break: break-all;
+      }
+      th { width: 160px; color: #94a3b8; font-weight: 600; }
+      code, .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px; background: #1e293b; padding: 1px 6px; border-radius: 6px;
+      }
+      a { color: #93c5fd; }
+      .back { display: inline-block; margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <div id="opener-banner">…</div>
+    <main>
+      <h1>Opener status (target=_blank landing page)</h1>
+      <p>
+        This page is opened by the labeled <code>target=_blank</code> links on the
+        <a href="./">home page</a>. The banner above shows whether this tab kept a
+        reference to its opener. In Chromium desktop windowing mode,
+        <code>isDesktopBrowserAuxiliaryNavigation</code> is gated on
+        <code>webContents.hasOpener()</code>.
+      </p>
+      <table id="facts">
+        <tr><th>hasOpener</th><td id="f-has"></td></tr>
+        <tr><th>opener type</th><td id="f-type"></td></tr>
+        <tr><th>window.name</th><td id="f-name"></td></tr>
+        <tr><th>page URL</th><td id="f-url"></td></tr>
+        <tr><th>new-tab hint</th><td id="f-newtab"></td></tr>
+      </table>
+      <p class="mono" id="f-json"></p>
+      <a class="back" href="./">&larr; Back to home page</a>
+    </main>
+    <script>
+      (function () {
+        var hasOpener = (window.opener != null);
+        var openerType = (window.opener === null ? "null" : typeof window.opener);
+        var windowName = window.name;
+        // Weak hint only; we display the facts, do not over-infer.
+        var newTabHint = (!!window.opener || history.length <= 1);
+
+        var banner = document.getElementById("opener-banner");
+        banner.className = hasOpener ? "bad" : "ok";
+        banner.innerHTML =
+          "hasOpener = " + hasOpener +
+          "<span class='sub'>opener type: " + openerType +
+          " &middot; window.name: " + (windowName ? windowName : "(empty)") + "</span>";
+
+        document.getElementById("f-has").textContent = String(hasOpener);
+        document.getElementById("f-type").textContent = openerType;
+        document.getElementById("f-name").textContent = windowName ? windowName : "(empty)";
+        document.getElementById("f-url").textContent = location.href;
+        document.getElementById("f-newtab").textContent =
+          String(newTabHint) + "  (weak hint: !!window.opener || history.length <= 1)";
+
+        var payload = {
+          url: location.href,
+          hasOpener: (window.opener != null),
+          openerType: (window.opener === null ? "null" : typeof window.opener),
+          windowName: window.name
+        };
+        document.getElementById("f-json").textContent = JSON.stringify(payload);
+        console.log("[OPENER-TEST]", JSON.stringify(payload));
+      })();
+    </script>
+  </body>
+</html>

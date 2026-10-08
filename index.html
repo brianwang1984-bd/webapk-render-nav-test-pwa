@@ -59,10 +59,19 @@
       }
       .note strong { color: #f8fafc; }
       a { color: #93c5fd; }
+      #opener-banner {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+        padding: 14px 16px; text-align: center; font-weight: 800; font-size: 24px;
+        box-shadow: 0 2px 14px rgba(0,0,0,.5);
+      }
+      #opener-banner.ok  { background: #166534; color: #dcfce7; }
+      #opener-banner.bad { background: #991b1b; color: #fee2e2; }
+      #opener-banner .sub { display: block; font-size: 13px; font-weight: 600; opacity: .9; margin-top: 4px; }
     </style>
   </head>
   <body>
-    <main>
+    <div id="opener-banner">…</div>
+    <main style="padding-top: 92px;">
       <p class="badge">Out of PWA scope · test start page</p>
       <h1>WebAPK renderer-navigation repro</h1>
       <p>
@@ -75,23 +84,44 @@
         Open in-scope PWA URL (same tab / target=_self)
       </a>
 
-      <h2>target=_blank variants (desktop windowing / hasOpener probe)</h2>
+      <h2>target=_blank &rarr; in-scope PWA (WebAPK-launch repro)</h2>
       <p>
-        These open the same in-scope PWA URL in a new tab. In desktop windowing
-        mode a <code>target=_blank</code> foreground tab can hit
+        These open the in-scope PWA URL (<code>./app/</code>) in a new tab. In
+        desktop windowing mode a <code>target=_blank</code> foreground tab can hit
         <code>isDesktopBrowserAuxiliaryNavigation</code>, which is gated on
-        <code>webContents.hasOpener()</code>. Plain <code>_blank</code> is
-        noopener-by-default (opener severed); <code>rel="opener"</code> forces
-        <code>hasOpener()==true</code>.
+        <code>webContents.hasOpener()</code>.
       </p>
       <a class="btn" id="blank-default" href="./app/" target="_blank">
-        _blank (bare — noopener by default)
+        open _blank (no rel) &rarr; PWA
       </a>
       <a class="btn" id="blank-opener" href="./app/" target="_blank" rel="opener">
-        _blank rel=opener (forces hasOpener=true)
+        open _blank rel=opener &rarr; PWA
       </a>
       <a class="btn" id="blank-noopener" href="./app/" target="_blank" rel="noopener">
-        _blank rel=noopener (explicit — Dan's suggestion)
+        open _blank rel=noopener &rarr; PWA
+      </a>
+
+      <h2>target=_blank &rarr; opener-status page (hasOpener probe)</h2>
+      <p>
+        Each link opens the <a href="./opener-status.html">opener-status landing
+        page</a> in a new tab with a different <code>rel</code>. The landing page
+        shows a big green/red banner for <code>hasOpener</code> so you can read the
+        result at a glance and compare across platforms.
+      </p>
+      <a class="btn" id="op-default" href="./opener-status.html" target="_blank">
+        open _blank (no rel)
+      </a>
+      <a class="btn" id="op-noopener" href="./opener-status.html" target="_blank" rel="noopener">
+        open _blank rel=noopener
+      </a>
+      <a class="btn" id="op-opener" href="./opener-status.html" target="_blank" rel="opener">
+        open _blank rel=opener
+      </a>
+      <a class="btn" id="op-noreferrer" href="./opener-status.html" target="_blank" rel="noreferrer">
+        open _blank rel=noreferrer
+      </a>
+      <a class="btn" id="op-opener-noreferrer" href="./opener-status.html" target="_blank" rel="opener noreferrer">
+        open _blank rel="opener noreferrer"
       </a>
 
       <div class="note">
@@ -122,6 +152,22 @@
     </main>
     <script>
       document.getElementById("here").textContent = location.href;
+      (function () {
+        var hasOpener = (window.opener != null);
+        var openerType = (window.opener === null ? "null" : typeof window.opener);
+        var banner = document.getElementById("opener-banner");
+        banner.className = hasOpener ? "bad" : "ok";
+        banner.innerHTML =
+          "hasOpener = " + hasOpener +
+          "<span class='sub'>opener type: " + openerType +
+          " &middot; window.name: " + (window.name ? window.name : "(empty)") + "</span>";
+        console.log("[OPENER-TEST]", JSON.stringify({
+          url: location.href,
+          hasOpener: (window.opener != null),
+          openerType: (window.opener === null ? "null" : typeof window.opener),
+          windowName: window.name
+        }));
+      })();
     </script>
   </body>
 </html>

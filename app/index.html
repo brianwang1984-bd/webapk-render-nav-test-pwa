@@ -19,7 +19,7 @@
         display: grid;
         place-items: center;
         text-align: center;
-        padding: 24px;
+        padding: 92px 24px 24px;
       }
       main { max-width: 560px; }
       h1 { margin: 0 0 8px; font-size: 28px; }
@@ -54,9 +54,18 @@
       }
       #install[hidden] { display: none; }
       .path { margin-top: 24px; font-size: 13px; opacity: .8; word-break: break-all; }
+      #opener-banner {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+        padding: 14px 16px; text-align: center; font-weight: 800; font-size: 24px;
+        box-shadow: 0 2px 14px rgba(0,0,0,.5);
+      }
+      #opener-banner.ok  { background: #166534; color: #dcfce7; }
+      #opener-banner.bad { background: #991b1b; color: #fee2e2; }
+      #opener-banner .sub { display: block; font-size: 13px; font-weight: 600; opacity: .9; margin-top: 4px; }
     </style>
   </head>
   <body>
+    <div id="opener-banner">…</div>
     <main>
       <p class="badge">In-scope PWA · /webapk-render-nav-test-pwa/app/</p>
       <h1>WebAPK Render-Nav Test</h1>
