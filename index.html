@@ -124,27 +124,27 @@
         open _blank rel="opener noreferrer"
       </a>
 
-      <h2>External intent (Android Settings)</h2>
+      <h2>External intent (YouTube app)</h2>
       <p>
-        If Chrome overrides the navigation into the external handler, Android
-        Settings opens. If the override is suppressed, no app opens and a new
-        browser tab is created instead.
+        If Chrome overrides the navigation into the external handler, the YouTube
+        app opens. If the override is suppressed, no app opens and a new browser
+        tab is created instead.
       </p>
       <a class="btn intent-link" id="intent-default" data-rel="none"
-         href="intent://open#Intent;action=android.settings.SETTINGS;end" target="_blank">
-        Open Settings via intent (_blank, no rel)
+         href="intent://m.youtube.com/watch?v=wD9nunl0nKY&amp;feature=mweb_c3_open_app_51888860&amp;itc_campaign=mweb_c3_open_app_51888860&amp;redirect_app_store_ios=1&amp;app=desktop#Intent;package=com.google.android.youtube;scheme=vnd.youtube;launchFlags=268435456;end" target="_blank">
+        Open YouTube via intent (_blank, no rel)
       </a>
       <a class="btn intent-link" id="intent-opener" data-rel="opener"
-         href="intent://open#Intent;action=android.settings.SETTINGS;end" target="_blank" rel="opener">
-        Open Settings via intent (_blank, rel=opener)
+         href="intent://m.youtube.com/watch?v=wD9nunl0nKY&amp;feature=mweb_c3_open_app_51888860&amp;itc_campaign=mweb_c3_open_app_51888860&amp;redirect_app_store_ios=1&amp;app=desktop#Intent;package=com.google.android.youtube;scheme=vnd.youtube;launchFlags=268435456;end" target="_blank" rel="opener">
+        Open YouTube via intent (_blank, rel=opener)
       </a>
       <a class="btn intent-link" id="intent-noopener" data-rel="noopener"
-         href="intent://open#Intent;action=android.settings.SETTINGS;end" target="_blank" rel="noopener">
-        Open Settings via intent (_blank, rel=noopener)
+         href="intent://m.youtube.com/watch?v=wD9nunl0nKY&amp;feature=mweb_c3_open_app_51888860&amp;itc_campaign=mweb_c3_open_app_51888860&amp;redirect_app_store_ios=1&amp;app=desktop#Intent;package=com.google.android.youtube;scheme=vnd.youtube;launchFlags=268435456;end" target="_blank" rel="noopener">
+        Open YouTube via intent (_blank, rel=noopener)
       </a>
       <a class="btn intent-link" id="intent-noreferrer" data-rel="noreferrer"
-         href="intent://open#Intent;action=android.settings.SETTINGS;end" target="_blank" rel="noreferrer">
-        Open Settings via intent (_blank, rel=noreferrer)
+         href="intent://m.youtube.com/watch?v=wD9nunl0nKY&amp;feature=mweb_c3_open_app_51888860&amp;itc_campaign=mweb_c3_open_app_51888860&amp;redirect_app_store_ios=1&amp;app=desktop#Intent;package=com.google.android.youtube;scheme=vnd.youtube;launchFlags=268435456;end" target="_blank" rel="noreferrer">
+        Open YouTube via intent (_blank, rel=noreferrer)
       </a>
 
       <div class="note">
@@ -198,7 +198,7 @@
           el.addEventListener("click", function () {
             console.log("[INTENT-TEST] clicked", JSON.stringify({
               rel: el.getAttribute("data-rel"),
-              href: "intent://open#Intent;action=android.settings.SETTINGS;end"
+              href: "intent://m.youtube.com/watch?v=wD9nunl0nKY&feature=mweb_c3_open_app_51888860&itc_campaign=mweb_c3_open_app_51888860&redirect_app_store_ios=1&app=desktop#Intent;package=com.google.android.youtube;scheme=vnd.youtube;launchFlags=268435456;end"
             }));
           });
         }
